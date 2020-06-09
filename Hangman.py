@@ -1,7 +1,7 @@
 import random
 import string
-import pdb
-word_list = []
+import keyboard
+
 
 def load_words():
     infile = open("wordlist.txt", "r")
@@ -22,12 +22,6 @@ random_word_len_fix = (len(random_word) -1)
 right = ["_"] * (len(random_word) -1)
 wrong = []
 
-def  score():
-        if len(wrong) > 5:
-            print("You lose")
-            print("The word was:", random_word)
-            input("Press Enter to close the program")
-
 def update():
     for i in right:
         print(i, end = " ")
@@ -36,11 +30,13 @@ def update():
 update()
 
 while True:
-    print("==============================")
+    print("=============================")
     guess = input("Guess a letter:")
     if guess in random_word:
         if guess in right:
             print("you already guessed that")
+        elif guess == (" "):
+            print("Letter can't be nothing")
         else:
             index = 0
             for i in random_word:
@@ -52,7 +48,12 @@ while True:
         if guess not in wrong:
             wrong.append(guess)
             print("Wrong letters:", wrong)
-            score()
+            if len(wrong) > 5:
+                print("You lose")
+                print("The word was:", random_word)
+                input("Press Enter to close the program")
+                break
+
         else:
             print("you already guessed that")
     if "_" not in right:
